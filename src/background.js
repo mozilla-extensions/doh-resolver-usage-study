@@ -1,5 +1,5 @@
 const DOH_TEST_DOMAIN = "doh.test";
-const WHOARTTHOU_DOMAIN = "nhnt11.com";
+const WHOARTTHOU_DOMAIN = "whoartthou";
 const CANONICAL_DOMAIN = "firefox-resolver-usage-test.net";
 
 async function resolveWithRetry(domain, flags) {
