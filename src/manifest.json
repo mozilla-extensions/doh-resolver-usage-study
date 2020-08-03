@@ -15,5 +15,5 @@
     "scripts": ["background.js"]
   },
 
-  "permissions": ["normandyAddonStudy", "dns", "telemetry", "mozillaAddons"]
+  "permissions": ["normandyAddonStudy", "dns", "telemetry"]
 }

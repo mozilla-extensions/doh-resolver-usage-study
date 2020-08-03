@@ -70,7 +70,7 @@ async function main() {
     }
   );
 
-  await browser.management.uninstallSelf();
+  await browser.normandyAddonStudy.endStudy("fin");
 }
 
 main();
