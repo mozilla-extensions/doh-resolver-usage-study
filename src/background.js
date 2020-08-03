@@ -2,6 +2,13 @@ const DOH_TEST_DOMAIN = "doh.test";
 const WHOARTTHOU_DOMAIN = "whoartthou";
 const CANONICAL_DOMAIN = "firefox-resolver-usage-test.net";
 
+// From https://stackoverflow.com/a/2117523
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
 async function resolveWithRetry(domain, flags) {
   let retryLimit = 3;
   let retryCount = 0;
@@ -43,7 +50,7 @@ async function main() {
 
   let whoartthouResults = await resolveWithRetry(WHOARTTHOU_DOMAIN, flags);
 
-  let uuid = await browser.uuid.get();
+  let uuid = uuidv4();
   let uniqueCanonicalDomain = `${uuid}.${CANONICAL_DOMAIN}`;
   let canonicalResults = await resolveWithRetry(uniqueCanonicalDomain, flags);
 

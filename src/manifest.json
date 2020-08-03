@@ -15,16 +15,5 @@
     "scripts": ["background.js"]
   },
 
-  "permissions": ["normandyAddonStudy", "dns", "telemetry", "mozillaAddons"],
-
-  "experiment_apis": {
-    "uuid": {
-      "schema": "./uuid/schema.json",
-      "parent": {
-        "scopes": ["addon_parent"],
-        "script": "./uuid/api.js",
-        "paths": [["uuid"]]
-      }
-    }
-  }
+  "permissions": ["normandyAddonStudy", "dns", "telemetry", "mozillaAddons"]
 }
