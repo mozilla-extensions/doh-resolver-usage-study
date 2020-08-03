@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "DoH Resolver Usage Study",
+  "version": "1.0.0",
+  "description": "Performs specific DNS lookups and sends results via Telemetry to help analyze usage rate of Comcast DNS resolvers",
+  "hidden": true,
+
+  "applications": {
+    "gecko": {
+      "id": "doh-resolver-usage-study@mozilla.org"
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "permissions": ["normandyAddonStudy", "dns", "telemetry", "mozillaAddons"],
+
+  "experiment_apis": {
+    "uuid": {
+      "schema": "./uuid/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./uuid/api.js",
+        "paths": [["uuid"]]
+      }
+    }
+  }
+}

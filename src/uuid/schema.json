@@ -1,0 +1,13 @@
+[
+  {
+    "namespace": "uuid",
+    "functions": [
+      {
+        "name": "get",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      }
+    ]
+  }
+]
