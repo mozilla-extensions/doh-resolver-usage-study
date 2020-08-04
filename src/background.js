@@ -9,12 +9,15 @@ function uuidv4() {
   );
 }
 
-async function resolveWithRetry(domain, flags) {
+async function resolveWithRetry(domainGetter, flags) {
   let retryLimit = 3;
   let retryCount = 0;
   while (retryCount < retryLimit) {
     retryCount++;
     try {
+      let domain = typeof domainGetter == "function"
+        ? domainGetter(retryCount)
+        : domainGetter;
       let { addresses, canonicalName } = await browser.dns.resolve(domain, flags);
       if (flags.includes("canonical_name")) {
         if (canonicalName) {
@@ -37,7 +40,7 @@ async function main() {
     resolve: {
       methods: ["resolve"],
       objects: ["domains"],
-      extra_keys: ["dohtest", "whoartthou", "canonical", "uuid"],
+      extra_keys: ["dohtest", "whoartthou", "canonical", "uuid", "uuidRetries"],
       record_on_release: true,
     },
   });
@@ -52,7 +55,11 @@ async function main() {
 
   let uuid = uuidv4();
   let uniqueCanonicalDomain = `${uuid}.${CANONICAL_DOMAIN}`;
-  let canonicalResults = await resolveWithRetry(uniqueCanonicalDomain, flags);
+  let uniqueDomainRetryCount = 0;
+  let canonicalResults = await resolveWithRetry(
+    (i) => `${uniqueDomainRetryCount = i}.${uniqueCanonicalDomain}`,
+    flags
+  );
 
   flags.push("canonical_name");
   let dohtestResults = await resolveWithRetry(DOH_TEST_DOMAIN, flags);
@@ -66,7 +73,8 @@ async function main() {
       "dohtest": dohtestResults.substring(0, 80),       // Max length is 80 chars
       "whoartthou": whoartthouResults.substring(0, 80), // so truncate foreign
       "canonical": canonicalResults.substring(0, 80),   // data before sending
-      uuid
+      uuid,
+      "uuidRetries": uniqueDomainRetryCount.toString(),
     }
   );
 
