@@ -1,6 +1,6 @@
-const DOH_TEST_DOMAIN = "doh.test";
+const DOH_TEST_DOMAIN = "doh.test.";
 const WHOARTTHOU_DOMAIN = "whoartthou.";
-const CANONICAL_DOMAIN = "firefox-resolver-usage-test.net";
+const CANONICAL_DOMAIN = "firefox-resolver-usage-test.net.";
 
 // From https://stackoverflow.com/a/2117523
 function uuidv4() {
