@@ -1,4 +1,5 @@
-const DOH_TEST_DOMAIN = "doh.test.";
+const DOH_TEST_DOMAIN = "doh.test";
+const DOH_TEST_DOT_DOMAIN = "doh.test.";
 const WHOARTTHOU_DOMAIN = "whoartthou.";
 const CANONICAL_DOMAIN = "firefox-resolver-usage-test.net.";
 
@@ -40,7 +41,7 @@ async function main() {
     resolve: {
       methods: ["resolve"],
       objects: ["domains"],
-      extra_keys: ["dohtest", "whoartthou", "canonical", "uuid", "uuidRetries"],
+      extra_keys: ["dohtest", "dohtestdot", "whoartthou", "canonical", "uuid", "uuidRetries"],
       record_on_release: true,
     },
   });
@@ -63,6 +64,7 @@ async function main() {
 
   flags.push("canonical_name");
   let dohtestResults = await resolveWithRetry(DOH_TEST_DOMAIN, flags);
+  let dohtestdotResults = await resolveWithRetry(DOH_TEST_DOT_DOMAIN, flags);
 
   await browser.telemetry.recordEvent(
     "doh.study.resolverusage",
@@ -71,8 +73,9 @@ async function main() {
     "ok",
     {
       "dohtest": dohtestResults.substring(0, 80),       // Max length is 80 chars
-      "whoartthou": whoartthouResults.substring(0, 80), // so truncate foreign
-      "canonical": canonicalResults.substring(0, 80),   // data before sending
+      "dohtestdot": dohtestdotResults.substring(0, 80), // so truncate foreign
+      "whoartthou": whoartthouResults.substring(0, 80), // data before sending
+      "canonical": canonicalResults.substring(0, 80),
       uuid,
       "uuidRetries": uniqueDomainRetryCount.toString(),
     }
