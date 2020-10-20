@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "DoH Resolver Usage Study",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Performs specific DNS lookups and sends results via Telemetry to help analyze usage rate of Comcast DNS resolvers",
   "hidden": true,
 
